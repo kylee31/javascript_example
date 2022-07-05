@@ -104,6 +104,11 @@
         var mycolor = "";
         var num = 0;
         var x;
+        //컬러상자 클래스로 가져오기
+        var colorBox = document.getElementsByClassName("box");
+        var colorO;
+        //컬러박스 마우스 클릭 이벤트
+        Array.from(colorBox).forEach(color => color.addEventListener("click", colorClick));
 
         //rgb 색상 만들기 (math() 메소드 사용)
         function makeColor() {
@@ -115,13 +120,12 @@
             return mycolor;
         }
 
-        //컬러상자 클래스로 가져오기
-        var colorBox = document.getElementsByClassName("box");
-        var colorO;
+        //newC()
         //새로운 컬러 만들어서 설정하기
         function newC() {
             x = 0;
             for (i = 0; i < colorBox.length; i++) {
+                colorBox[i].style.visibility="visible";
                 colorBox[i].style.backgroundColor = makeColor();
             }
             var colorGuess = document.getElementById("result");
@@ -129,11 +133,8 @@
             colorGuess.innerHTML = colorO;
         }
 
-        //컬러박스 마우스 클릭 이벤트
-        var showO = document.getElementById("show");
-        Array.from(colorBox).forEach(color => color.addEventListener("click", colorClick));
-
-        //정답여부 판별 메소드
+        //colorClick()
+        //정답여부 판별
         function colorClick(event) {
             const color = event.target.style.backgroundColor;
             if (color == colorO.toLowerCase()) {
@@ -143,9 +144,11 @@
                 newC();
             }
             else {
-                alert("❌");
+                
                 //클릭한 상자가 오답이면 컬러박스 지우기
-                this.style.backgroundColor = "white";
+                //JavaScript로 visibility 사용해야 할듯, 생각해보니 배경색 설정은 그냥 눈속임 정도...
+                this.style.visibility="hidden";
+                alert("❌");
                 x++;
 
                 //3번 오답이면 다음 게임으로 넘어가기
@@ -158,7 +161,7 @@
             }
             }
         }
-
+        
         //처음 시작
         newC();
 
