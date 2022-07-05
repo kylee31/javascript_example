@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>calculator</title>
+</head>
+<style>
+    body {
+        display: flex;
+        justify-content: center;
+    }
+
+    table {
+        margin-top: 130px;
+        border: 2px solid gray;
+        border-collapse: separate;
+        border-spacing:10px;
+    }
+
+    td {
+        width: 80px;
+        height: 40px;
+        border: 2px solid gray;
+        text-align: center;
+        font-size: 1.3rem;
+    }
+
+    #result {
+        text-align: right;
+    }
+
+    #operator {
+        background-color: gray;
+    }
+
+    #same {
+        background-color: rgb(86, 165, 255);
+    }
+</style>
+
+<body>
+    <table class="calc">
+        <tr>
+            <td colspan="4" id="result"></td>
+        </tr>
+        <tr id="operator">
+            <td class="c">+</td>
+            <td class="c">-</td>
+            <td class="c">x</td>
+            <td class="c">÷</td>
+        </tr>
+        <tr>
+            <td class="n">7</td>
+            <td class="n">8</td>
+            <td class="n">9</td>
+            <td id="same" onclick="final()" rowspan="4">=</td>
+        </tr>
+        <tr>
+            <td class="n">4</td>
+            <td class="n">5</td>
+            <td class="n">6</td>
+        </tr>
+        <tr>
+            <td class="n">1</td>
+            <td class="n">2</td>
+            <td class="n">3</td>
+        </tr>
+        <tr>
+            <td class="n">0</td>
+            <td class="n">.</td>
+            <td onclick="remove()">C</td>
+        </tr>
+    </table>
+    <script>
+        var arr="";
+        var oper = document.getElementById("operator");
+        var result = document.getElementById("result");
+        var calc = oper.innerText.replace(/\s+/g, "");
+        console.log(calc);
+
+        var choice = document.querySelectorAll(".c");
+        choice.forEach((target) => target.addEventListener("click", inputC));
+
+        var num = document.querySelectorAll(".n");
+        num.forEach((target) => target.addEventListener("click", calcN));
+
+        function inputC() {
+            console.log(this.innerText);
+            if (this.innerText == "x") {
+                arr+= "*";
+            }
+            else if (this.innerText == "÷") {
+                arr+= "/";
+            }
+            else {
+                arr+= this.innerText;
+            }
+            result.innerHTML+=this.innerText;
+        }
+        function calcN() {
+            console.log(this.innerText);
+            result.innerHTML += this.innerText;
+            arr+=this.innerText;
+        }
+        function final() {
+            console.log(result.innerHTML);
+            var show = eval(arr);
+            return result.innerHTML = show;
+        }
+        function remove() {
+            result.innerHTML = "";
+            arr="";
+        }
+
+    </script>
+</body>
+
+</html>

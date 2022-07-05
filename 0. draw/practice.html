@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>그림판</title>
+    <link rel="stylesheet" href="draw.css">
+</head>
+
+<body>
+    <h1>그림판</h1>
+    <!--색선택-->
+    <div class="colorB">
+        <ul>
+            <li id="palette">
+                <div id="palletBox"></div>
+                <form><input type="color" id="colorPick"></form>
+            </li>
+            <li id="line"><label>선굵기 <form><input type="text" size="3" id="linePick" placeholder=1>px</form></label></li>
+            <li id="choiceColor"></li>
+            <li id="position"></li>
+            <li id="del"><button id="delbutton" type="button">그림<br>삭제</button></li>
+        </ul>
+    </div>
+    <!--그림판-->
+    <canvas id="sketch" width=600 height=450>
+    </canvas>
+
+    <script type="text/javascript" src="draw.js"></script>
+</body>
+
+</html>

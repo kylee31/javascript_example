@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>clock</title>
+    <style>
+        *{
+            margin:0;
+            padding:0;
+        }
+        body{
+            background-color:black;
+        }
+        #clock{
+            margin-top:20%;
+            text-align: center;
+            font-size: 6rem;
+            color:rgb(73, 197, 255)
+        }
+    </style>
+</head>
+<body onload="init()">
+    <div id="clock">
+    </div>
+
+    <script>
+        var clock=document.getElementById("clock");
+        
+        function clockWrite(){
+            var time=new Date();
+            var hour=time.getHours(); //0~23
+            var minutes=time.getMinutes(); //0~59
+            var seconds=time.getSeconds(); //0~59
+
+            //아니 if문이 먼가.. 너무 비효율적으로 생긴듯.. 고칠수 잇는 방법?
+            //삼항 연산자로 고쳐보기
+            //{hour<12 ? AM : PM}
+            if(hour<12){ //오전 AM(0시~11시)
+                clock.innerHTML=String(hour).padStart(2,'0')+" : "+String(minutes).padStart(2,'0')+" : "+String(seconds).padStart(2,'0')+" AM";
+            }
+            else if(hour==12){ //오후 12시 (hour에-12해주기 때문에 12시는 따로 뺌)
+                //이게 비효율적인것 같음, 좀더 간결한 코드 구상하기
+                clock.innerHTML=String(hour).padStart(2,'0')+" : "+String(minutes).padStart(2,'0')+" : "+String(seconds).padStart(2,'0')+" PM";
+            }
+            else{ //오후 PM(12시~23시)
+                clock.innerHTML=String(hour-12).padStart(2,'0')+" : "+String(minutes).padStart(2,'0')+" : "+String(seconds).padStart(2,'0') +" PM";
+            }
+        
+        //settimeout이랑 다른점?
+        setInterval(clockWrite,1000);
+        }
+
+        clockWrite();
+
+    </script>
+</body>
+</html>

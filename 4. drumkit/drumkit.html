@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>drumkit</title>
+</head>
+<style>
+    /*드럼킷 이미지와 버튼이 웹페이지 사이즈 변화에도 움직이지 않도록 설정*/
+    #drum {
+        position: absolute;
+    }
+
+    img {
+        width: 600px;
+        z-index: -1;
+    }
+
+    .btn {
+        width: 30px;
+        height: 30px;
+        border: 2px solid gray;
+        border-radius: 5px;
+        ;
+    }
+
+    #e {
+        position: absolute;
+        z-index: 1;
+        left: 100px;
+        bottom: 450px;
+    }
+
+    #r {
+        position: absolute;
+        z-index: 1;
+        left: 180px;
+        bottom: 450px;
+    }
+
+    #show {
+        display: flex;
+        justify-content: right;
+    }
+
+    table {
+        background-color: #000;
+        z-index: 1;
+        text-align: center;
+        color:white;
+        border-collapse: separate;
+        border-spacing: 40px;
+    }
+
+    tr>td:first-child {
+        color:black;
+        font-size: 1.3rem;
+        background-color: aliceblue;
+        width: 50px;
+        height: 50px;
+        border: 2px solid gray;
+        border-radius: 5px;
+    }
+    tr>td:last-child {
+        width: 100px;
+    }
+</style>
+
+<body>
+    <!--드럼킷 이미지, 버튼-->
+    <div id="drum">
+        <img src="drums.jpg" alt="drumkit">
+        <button type="button" id="e" class="btn">E</button>
+        <button type="button" id="r" class="btn">R</button>
+    </div>
+    <!--키 안내문-->
+    <!--안내문에는 따로 기능이 없으니 굳이 테이블로 만들지 않아도 이미지로 삽입하면 간략해질듯-->
+    <div id="show">
+        <table>
+            <th colspan="2" style="font-size:1.5rem">Key Mapping</th>
+            <tr><td>E</td><td>Crash</td></tr>
+            <tr><td>R</td><td>Ride</td></tr>
+        </table>
+    </div>
+    <script>
+        var btn = document.querySelectorAll(".btn");
+        var crush = new Audio("bubble.wav");
+        var ride = new Audio("shout.wav");
+        var alphabet, keyC;
+
+        //각각의 버튼에 click 이벤트 추가
+        btn.forEach((target) => target.addEventListener("click", sound));
+
+        //버튼 선택 시 태그 안 값 받아서 소리 출력하기
+        function sound() {
+            alphabet = this.innerText;
+            switch (alphabet) {
+                case "E": crush.play(); break;
+                case "R": ride.play(); break;
+            }
+            console.log(alphabet);
+        }
+
+        //키보드 입력시 키보드값 구분하여 소리 출력
+        var keyP = document.addEventListener("keydown", e => {
+            keyC = e.key;
+
+            console.log(keyC);
+
+            switch (keyC) {
+                case "E": crush.play(); break;
+                case "R": ride.play(); break;
+            }
+        });
+
+    </script>
+</body>
+
+</html>

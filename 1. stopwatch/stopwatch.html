@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>stopwatch</title>
+    <style>
+        * {
+            background-color: rgb(255, 157, 0);
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        #time {
+            font-size: 4rem;
+            padding-bottom: 50px;
+        }
+
+        .btn {
+            width: 100px;
+            height: 50px;
+        }
+
+        .btn:hover {
+            background-color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <h1>STOPWATCH</h1>
+        <h1>JAVASCRIPT STOPWATCH</h1>
+    </div>
+    <div id="time">
+        <!--time 보여주기-->
+        00 : 00
+    </div>
+    <div>
+        <button type="button" class="btn" onclick="Start()">Start</button>
+        <button type="button" class="btn" onclick="Stop()">Stop</button>
+        <button type="button" class="btn" onclick="Reset()">Reset</button>
+    </div>
+    <script>
+        var timerld;
+        var time = 0;
+        var showTime = document.getElementById("time");
+        var min, sec;
+        
+        function printTime() {
+            time++
+            showTime.innerText = getTimeString();
+        }
+
+        function Start() {
+            printTime();
+            Stop();
+            timerld = setTimeout(Start, 1000);
+        }
+
+        function Stop() {
+            if (timerld != null) {
+                clearTimeout(timerld);
+            }
+        }
+
+        function Reset() {
+            Stop();
+            showTime.innerText = "00 : 00"
+            time = 0;
+        }
+
+        function getTimeString() {
+            min = parseInt(String(time / 60));
+            sec = time % 60;
+            return String(min).padStart(2, '0') + " : " + String(sec).padStart(2, '0');
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>colorgame</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            text-align: center;
+            background-color: aliceblue;
+        }
+
+        .game {
+            width: 600px;
+            margin: 0 auto;
+            background-color: white;
+            box-shadow: 0px 0px 3px 3px rgb(0, 0, 0, 0.1);
+        }
+
+        .title {
+            display: flex;
+            margin: 0px auto;
+            flex-direction: column;
+            padding-top: 30px;
+            font-size: 2rem;
+            background-color: aquamarine;
+            width: 600px;
+            height: 190px;
+        }
+
+        ul {
+            display: flex;
+            margin: 0px auto;
+            flex-direction: row;
+            list-style: none;
+            width: 600px;
+            color: rgb(20, 146, 146);
+        }
+
+        ul>li {
+            width: 200px;
+        }
+
+        .palette {
+            margin: 0 auto;
+            width: 600px;
+        }
+
+        .box {
+            display: inline-block;
+            flex-direction: row;
+            width: 150px;
+            height: 150px;
+            background-color: #000;
+            border-radius: 10px;
+            margin: 15px;
+        }
+
+        li:hover {
+            background-color: lightblue;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="game">
+        <div class="title">
+            THE GREAT
+            <h1 id="result">RGB(0,0,0)</h1>
+            GUESSING GAME
+        </div>
+        <div>
+            <ul>
+                <li id="colorC" onclick="newC()">NEW COLORS</li>
+                <li id="easy" onclick="mode()">EASY</li>
+                <li id="hard" onclick="mode()">HARD</li>
+            </ul>
+        </div>
+        <div class="palette">
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div><br>
+            <div class="box"></div>
+            <div class="box"></div>
+            <div class="box"></div>
+        </div>
+    </div>
+    <script>
+        //easy모드, hard모드 구현하기
+        //easy는 박스 3개
+        //hard는 박스 6개
+        //매개변수 값을 변경해서 받으면 편할듯
+        //div를 스크립트에서 만들어야 3개 클릭과 6개 클릭이 가능할듯
+        //draw 예제처럼 변경하기
+
+        var mycolor = "";
+        var num = 0;
+        var x;
+
+        //rgb 색상 만들기 (math() 메소드 사용)
+        function makeColor() {
+            const r = Math.floor(Math.random() * 256);
+            const g = Math.floor(Math.random() * 256);
+            const b = Math.floor(Math.random() * 256);
+
+            mycolor = "RGB(" + r + "," + g + "," + b + ")";
+            return mycolor;
+        }
+
+        //컬러상자 클래스로 가져오기
+        var colorBox = document.getElementsByClassName("box");
+        var colorO;
+        //새로운 컬러 만들어서 설정하기
+        function newC() {
+            x = 0;
+            for (i = 0; i < colorBox.length; i++) {
+                colorBox[i].style.backgroundColor = makeColor();
+            }
+            var colorGuess = document.getElementById("result");
+            colorO = String(colorBox[Math.floor(Math.random() * 6)].style.backgroundColor).toUpperCase();
+            colorGuess.innerHTML = colorO;
+        }
+
+        //컬러박스 마우스 클릭 이벤트
+        var showO = document.getElementById("show");
+        Array.from(colorBox).forEach(color => color.addEventListener("click", colorClick));
+
+        //정답여부 판별 메소드
+        function colorClick(event) {
+            const color = event.target.style.backgroundColor;
+            if (color == colorO.toLowerCase()) {
+                o = num;
+                num++;
+                alert("✅ " + num);
+                newC();
+            }
+            else {
+                alert("❌");
+                //클릭한 상자가 오답이면 컬러박스 지우기
+                this.style.backgroundColor = "white";
+                x++;
+
+                //3번 오답이면 다음 게임으로 넘어가기
+                if(x==3){
+                setTimeout(function(){
+                    alert("FAIL😓");
+                    x=0;
+                    newC();
+                },200);
+            }
+            }
+        }
+
+        //처음 시작
+        newC();
+
+    </script>
+</body>
+
+</html>
