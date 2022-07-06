@@ -8,22 +8,7 @@
     <title>Document</title>
 </head>
 <style>
-    /* Variabes */
-
-
     /* Mixin's */
-    @mixin transition {
-        -webkit-transition: all 0.5s ease-in-out;
-        -moz-transition: all 0.5s ease-in-out;
-        transition: all 0.5s ease-in-out;
-    }
-
-    @mixin corners ($radius) {
-        -moz-border-radius: $radius;
-        -webkit-border-radius: $radius;
-        border-radius: $radius;
-        -khtml-border-radius: $radius;
-    }
 
     body {
         font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
@@ -51,7 +36,6 @@
     }
 
     button {
-        @include corners (5px);
         text-decoration: none;
         cursor: pointer;
         font-size: 1.2em;
@@ -67,12 +51,15 @@
         <h1>Stopwatch</h1>
         <h2>Vanilla JavaScript Stopwatch</h2>
         <p><span id="seconds">00</span>:<span id="tens">00</span></p>
+        <!--버튼에 각각 id를 줌-->
         <button id="button-start">Start</button>
         <button id="button-stop">Stop</button>
         <button id="button-reset">Reset</button>
     </div>
 
     <script>
+        //DOM 이벤트 핸들러 사용
+        //로드되면 익명함수 실행되도록
         window.onload = function () {
 
             var seconds = 00;
@@ -84,17 +71,18 @@
             var buttonReset = document.getElementById('button-reset');
             var Interval;
 
+            //DOM 이벤트 핸들러 start
             buttonStart.onclick = function () {
-
                 clearInterval(Interval);
                 Interval = setInterval(startTimer, 10);
             }
 
+            //DOM 이벤트 핸들러 stop
             buttonStop.onclick = function () {
                 clearInterval(Interval);
             }
 
-
+            //DOM 이벤트 핸들러 reset
             buttonReset.onclick = function () {
                 clearInterval(Interval);
                 tens = "00";
@@ -103,11 +91,12 @@
                 appendSeconds.innerHTML = seconds;
             }
 
-
-
             function startTimer() {
                 tens++;
 
+                //이 코드에서는 초, 밀리초 구현
+                //padStart()사용하면 간편해지지 않을까 if문 사용할 필요없이
+                //if문도 따로 사용하기 보단 else if를 사용하면 좋을듯
                 if (tens <= 9) {
                     appendTens.innerHTML = "0" + tens;
                 }

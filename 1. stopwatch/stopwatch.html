@@ -56,7 +56,7 @@
         
         function printTime() {
             time++
-            showTime.innerText = getTimeString();
+            showTime.innerHTML = getTimeString();
         }
 
         function Start() {
@@ -73,7 +73,7 @@
 
         function Reset() {
             Stop();
-            showTime.innerText = "00 : 00"
+            showTime.innerText = "00 : 00";
             time = 0;
         }
 
