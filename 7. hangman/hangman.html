@@ -161,8 +161,9 @@
         if (my == o) {
             //단어 중복되지 않도록 배열에서 제거 splice()메소드 사용
             fruit.splice(num, 1);
-            if (fruit.length != 0) {
-                setTimeout(init, 500);
+            if (fruit.length != 0) {            
+                show.innerHTML = "SUCCESS😆";
+                setTimeout(init, 600);
 
             }
             //마지막 단어까지 맞춘 경우

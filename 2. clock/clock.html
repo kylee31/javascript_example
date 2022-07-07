@@ -38,6 +38,7 @@
             var minutes = time.getMinutes(); //0~59
             var seconds = time.getSeconds(); //0~59
 
+            //22.07.07 code refactoring
             //12보다 작거나 같으면 그대로, 12보다 크면 12빼기 (12시간제)
             var h=String((hour<=12) ? hour : (hour-12)).padStart(2,'0');
             var m = String(minutes).padStart(2, '0');
