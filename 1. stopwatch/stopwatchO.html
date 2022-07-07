@@ -52,14 +52,21 @@
             </div>
         </center>
         <script>
+            //버튼1에 시작, 중지, 재시작 / 버튼2에 중지, 클리어 구현
+
             // A couple of global variables
             var start, stop, stopwatchBox;
             var starttime;
             var status; // 0=init, 1=working, 2=paused
             var offsettime;
+            //timerId를 따로 선언하지 않고서 아래서 사용했는데 실행이 됨??
+            //scope chain으로 최상위객체(window) 전역변수처럼 추가되어 문제없이 undifined 상태(따로 값을 주지 않았다면)로 실행.
+            //js는 변수타입 선언에 관대하다.. 객체지향언어처럼 깐깐하지 않다
+            var timerId;
 
             // Grab the necessary elements from the DOM
             start = document.getElementById("start");
+            //stop() 내장함수(메소드)가 있으므로 변수명 변경하는게 좋을듯
             stop = document.getElementById("stop");
             stopwatchBox = document.getElementById("stopwatch-box");
             starttime = new Date();
@@ -78,6 +85,7 @@
 
             // Define a timer ID for the setInterval function
             timerId = null;
+            console.log(timerId);
 
             // Create the stopwatch
             function stopwatch(command) {
@@ -87,6 +95,8 @@
                     milli = 0,
                     display;
 
+
+                //padStart() 기능을 직접 구현한듯
                 function makeZeroPad(number, len) {
                     // len:  the length of output we want to make number
                     var outnumber = String(number);
@@ -140,6 +150,7 @@
                     if (timerId)
                         clearInterval(timerId);
                     timerId = null;
+
                     if (status == 0 || status == 2) {
                         status = 0;
                         offsettime = 0;

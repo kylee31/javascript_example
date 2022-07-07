@@ -32,7 +32,7 @@ for (i = 0; i < colorBox.length; i++) {
 
 //배열..불러와서 이벤트리스너;..
 //https://velog.io/@yunji0614/JS-Paint 참고
-Array.from(colorBox).forEach(color => color.addEventListener("click", handleColorClick))
+Array.from(colorBox).forEach(color => color.addEventListener("click", handleColorClick));
 
 function handleColorClick(event) {
     const color = event.target.style.backgroundColor;

@@ -35,15 +35,22 @@
         var s = date.getSeconds(); // 0 - 59
         var session = "AM";
 
+
+        //오후 12일때 AM, PM 표시 처리를 안한듯 (낮 12시는 PM) - 코드수정
+        //이 코드는 AM 12일때 0을 12시로 표시
         if (h == 0) {
             h = 12;
         }
 
-        if (h > 12) {
+        if(h==12){
+            session = "PM";
+        }
+        else if (h > 12) {
             h = h - 12;
             session = "PM";
         }
 
+        //padStart()로 처리한 부분을 삼항조건식으로 표현.
         h = (h < 10) ? "0" + h : h;
         m = (m < 10) ? "0" + m : m;
         s = (s < 10) ? "0" + s : s;
@@ -52,6 +59,8 @@
         document.getElementById("MyClockDisplay").innerText = time;
         document.getElementById("MyClockDisplay").textContent = time;
 
+        //setInterval()이 시계에는 좀더 맞을듯
+        //결과는 같음
         setTimeout(showTime, 1000);
 
     }

@@ -100,16 +100,19 @@
             }
             result.innerHTML+=this.innerText;
         }
+
         function calcN() {
             console.log(this.innerText);
             result.innerHTML += this.innerText;
             arr+=this.innerText;
         }
+
         function final() {
             console.log(result.innerHTML);
             var show = eval(arr);
             return result.innerHTML = show;
         }
+        
         function remove() {
             result.innerHTML = "";
             arr="";

@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>hangman</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            background-color: rgb(176, 226, 68);
+        }
+
+        body {
+            text-align: center;
+            color: white;
+        }
+
+        #title {
+            font-size: 2rem;
+        }
+
+        .box {
+            display: inline-block;
+            font-size: 1.5rem;
+            width: 50px;
+            height: 50px;
+            background-color: white;
+            color: rgb(176, 226, 68);
+        }
+
+        #show {
+            font-size: 3rem;
+            font-weight: 900;
+        }
+
+        .box+.box {
+            margin-left: 10px;
+            margin-bottom: 10px;
+        }
+
+        .word {
+            font-size: 4rem;
+            font-weight: 900;
+        }
+
+        .word+.word {
+            margin-left: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="title">
+        HANGMAN<br>
+        JAVASCRIPT HANGMAN GAME<br>
+        <br>
+        Use the alphabet below to guess the word.
+    </div><br>
+    <div style="font-size:1.4rem">chance <span id="live"></span></div><br>
+    <div id="alphabet">
+    </div><br>
+    <div style="font-size:2rem">
+        Category : fruit
+    </div><br><br>
+    <div id="show">
+    </div>
+</body>
+<script>
+    var alpa = document.getElementById("alphabet");
+    //알파벳 26개
+    var a = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
+    //속성,값 쌍 형식 딕셔너리??-js에도 있나 활용하면 어떨까
+    //단어
+    var fruit = ["apple", "banana", "melon", "grape", "peach", "watermelon"];
+    var show = document.getElementById("show");
+    var btn = document.getElementsByClassName("box");
+    var word = document.getElementsByClassName("word");
+    var showlive = document.getElementById("live");
+    var live; //기회 횟수
+    var no; //없는 알파벳 검사할 변수
+    var o; //랜덤으로 선택될 단어 저장할 변수
+
+    var num;
+
+    //알파벳 박스 넣기
+    for (var i = 0; i < 26; i++) {
+        alpa.innerHTML += "<div class='box'>" + a[i] + "</div>";
+    }
+
+    //초기화(새 단어)
+    function init() {
+        live = 5;//생명 5로 초기화하고 보여주기
+        showlive.innerHTML = live;
+
+        //btn visible 초기화
+        for (i = 0; i < 26; i++) {
+            btn[i].style.visibility = "visible";
+        }
+
+        //정답 단어 선택하기
+        num = Math.floor(Math.random() * (fruit.length));
+        o = fruit[num];
+
+        console.log(o);
+
+        show.innerHTML = "";
+        //단어 길이만큼 _ 넣기
+        for (i = 0; i < o.length; i++) {
+            show.innerHTML += "<span class='word'>_</span>";
+        }
+    }
+
+    //js에서 선언한 class와 html에서 선언한 class의 차이점 때문인건가??
+    //get~와 query~의 차이점을 모르겠음..
+    //어떤점이 다르길래 이렇게 써야하는건지?
+
+    //버튼 이벤트
+    Array.from(btn).forEach(event => event.addEventListener("click", choice));
+
+    //버튼 선택시 일어나는 이벤트
+    function choice() {
+        no = 0;
+        //단어 길이만큼 반복
+        for (i = 0; i < o.length; i++) {
+            //단어에 들어있는 알파벳 일때, _지우고 알파벳 넣기
+            if (this.innerText == o[i]) {
+                word[i].innerText = "";
+                word[i].innerText += this.innerText;
+            }
+            //없는 알파벳이면 no값 1씩 올리기
+            else if (this.innerHTML != o[i]) {
+                no++;
+            }
+        }
+        //없는 알파벳(no값이 단어 길이와 동일할때)이면 버튼 안보이기, 기회 1 차감
+        if (no == o.length) {
+            live--;
+            this.style.visibility = "hidden";
+            showlive.innerHTML = live;
+        }
+
+        //단어 완성도 검사
+        correct();
+        //기회 검사
+        life();
+    }
+
+    //완성된 단어 검사하기
+    function correct() {
+        var mine = document.getElementsByClassName("word");
+        //span의 innertext 하나의 배열에 저장하기
+        var my = "";
+        for (i = 0; i < mine.length; i++) {
+            my += mine[i].innerText;
+        }
+
+        //완성단어와 정답이 같으면 실행
+        if (my == o) {
+            //단어 중복되지 않도록 배열에서 제거 splice()메소드 사용
+            fruit.splice(num, 1);
+            if (fruit.length != 0) {
+                setTimeout(init, 500);
+
+            }
+            //마지막 단어까지 맞춘 경우
+            else {
+                setTimeout(function () {
+                    for (i = 0; i < 26; i++) {
+                        btn[i].style.visibility = "visible";
+                    }
+                    live = 5;
+                    showlive.innerHTML = live;
+                    show.innerHTML = "CLEAR👏";
+                }, 500);
+            }
+        }
+    }
+
+    //기회 검사하기
+    function life() {
+        if (live == 0) {
+            show.innerHTML = "FAIL😓";
+            setTimeout(init, 600);
+        }
+    }
+
+    init();
+
+</script>
+
+</html>
