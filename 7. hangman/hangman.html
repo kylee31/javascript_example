@@ -72,7 +72,7 @@
     var alpa = document.getElementById("alphabet");
     //알파벳 26개
     var a = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
-    //속성,값 쌍 형식 딕셔너리??-js에도 있나 활용하면 어떨까
+    //속성,값 쌍 형식 딕셔너리 활용해서 힌트 보여주기?
     //단어
     var fruit = ["apple", "banana", "melon", "grape", "peach", "watermelon"];
     var show = document.getElementById("show");
@@ -135,13 +135,14 @@
                 no++;
             }
         }
-        //없는 알파벳(no값이 단어 길이와 동일할때)이면 버튼 안보이기, 기회 1 차감
+        //없는 알파벳이면 기회 1 차감
         if (no == o.length) {
             live--;
-            this.style.visibility = "hidden";
             showlive.innerHTML = live;
         }
-
+        
+        //누른 버튼 안보이기
+        this.style.visibility = "hidden";
         //단어 완성도 검사
         correct();
         //기회 검사
@@ -161,9 +162,11 @@
         if (my == o) {
             //단어 중복되지 않도록 배열에서 제거 splice()메소드 사용
             fruit.splice(num, 1);
-            if (fruit.length != 0) {            
-                show.innerHTML = "SUCCESS😆";
-                setTimeout(init, 600);
+            if (fruit.length != 0) {
+                setTimeout(function(){
+                    show.innerHTML = "SUCCESS😆";
+                },400);            
+                setTimeout(init, 1000);
 
             }
             //마지막 단어까지 맞춘 경우

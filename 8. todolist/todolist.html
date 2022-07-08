@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        .box {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        #txt{
+            width:260px;
+            height:40px;
+            border:none;
+            background-color:aqua;
+        }
+        #btn {
+            width: 40px;
+            height:40px;
+        }
+        #content{
+            width:300px;
+            height: 300px;
+            background-color:aliceblue;
+        }
+        .out{
+            height:40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .out:nth-child(odd){ /*even 짝수, odd 홀수*/
+            background-color: lightgray;
+        }
+        .remove{
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            cursor: pointer;
+        }
+        .todo{
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box">
+        <h1>TODO LIST</h1>
+        <!--button submit 사용..? submit과 button 차이 확실히 알기-->
+        <div><input id="txt" type="text"><button type="button" id="btn">+</button></div>
+        <div id="content"></div>
+    </div>
+</body>
+<script>
+    //var사용없이 const와 let으로만 선언해보기
+    const btn=document.getElementById("btn");
+    const txt=document.getElementById("txt");
+    let content=document.getElementById("content");
+    let todo=document.getElementsByClassName("todo");
+    let remove=document.getElementsByClassName("remove");
+    let out=document.getElementsByClassName("out");
+    
+    let num=0;
+    let arr=0;
+
+    //버튼 클릭시 할일 추가
+    btn.addEventListener("click",function(){
+        let v=txt.value;
+        console.log(txt.value);
+        if(txt.value!=""){
+        content.innerHTML+="<div class='out' id="+arr+"><span class='todo'>"+txt.value+"</span><span class='remove'>❌</span></div>";
+        txt.value="";
+        }
+        //클릭시 새로 추가되는 것이므로 배열을 여기서 불러줘야 작동한다..
+        Array.from(todo).forEach(event => event.addEventListener("click",del));
+        Array.from(remove).forEach(event => event.addEventListener("click",remov));
+
+        //txt.value를 바로 넣어주니까 오류남
+        //json으로 저장하기
+        localStorage.setItem(arr,v);
+        arr++;
+    });
+
+    //할일 완료
+    function del(){
+        if(this.style.textDecoration=="none") this.style.textDecoration="line-through";
+        else this.style.textDecoration="none";
+    }
+
+    //할일 제거
+    function remov(){
+        this.parentNode.remove();
+        console.log(this.parentNode.id);
+        localStorage.removeItem(this.parentNode.id);
+    }
+
+</script>
+
+</html>
