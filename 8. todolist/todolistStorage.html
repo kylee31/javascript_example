@@ -140,12 +140,19 @@
     function clear() {
         if (this.style.textDecoration != "line-through") {
             this.style.textDecoration = "line-through";
-            arrTodo[this.parentNode.id].deco='line-through';
+            //리스트를 삭제했을 경우 인덱스번호와 id가 맞지않으므로, id와 맞는 배열의 인덱스 번호를 찾는게 중요!!!!
+            for(i=0;i<arrTodo.length;i++){
+                if(arrTodo[i].id==this.parentNode.id)
+                    arrTodo[i].deco='line-through';
+            }
             localStorage.setItem("items",JSON.stringify(arrTodo));
         }
         else {
             this.style.textDecoration = "none"
-            arrTodo[this.parentNode.id].deco='none';
+            for(i=0;i<arrTodo.length;i++){
+                if(arrTodo[i].id==this.parentNode.id)
+                    arrTodo[i].deco="none";
+            }
             localStorage.setItem("items",JSON.stringify(arrTodo));
         }
     }
