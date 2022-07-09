@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        .box {
+            width: 300px;
+            margin: auto;
+            margin-top: 100px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 0 3px 3px rgba(0, 0, 0, 0.2);
+        }
+
+        #txt {
+            width: 260px;
+            height: 40px;
+            border: none;
+            background-color: rgb(212, 226, 255);
+        }
+
+        #btn {
+            width: 40px;
+            height: 40px;
+            border: 0;
+            background-color: rgb(179, 179, 179);
+        }
+
+        #content {
+            width: 300px;
+            min-height: 300px;
+            background-color: aliceblue;
+        }
+
+        .to {
+            width:300px;
+            min-height:40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            overflow:visible;
+            background-color: aliceblue;
+        }
+
+        .to:nth-child(odd) {
+            /*even 짝수, odd 홀수*/
+            background-color: rgb(229, 229, 229);
+        }
+
+        .remove {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            cursor: pointer;
+        }
+
+        .todo {
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box">
+        <h1>TODO LIST</h1>
+        <!--button submit 사용..? submit과 button 차이 확실히 알기-->
+        <div><input id="txt" type="text"><button type="button" id="btn">+</button></div>
+        <ul id="content"></ul>
+    </div>
+</body>
+<script>
+    //var사용없이 const와 let으로만 선언해보기
+    const btn = document.getElementById("btn");
+    const txt = document.getElementById("txt");
+    const content = document.getElementById("content");
+    const todo = document.getElementsByClassName("todo");
+    const remove = document.getElementsByClassName("remove");
+
+    let arrTodo = [];
+    let num=0;
+    const obj = JSON.parse(localStorage.getItem("items"));
+
+    //저장되어 있는 리스트 보여주기
+    function loadList() {
+        let arr = 0;
+        if (obj == null || obj == "") {} //입력창이 비어있는 경우 예외처리
+        else {    
+            num = obj.length;
+            for (i = 0; i < obj.length; i++) {
+                mylist(obj[i].txt,arr,obj[i].deco);
+                arr++;
+            }
+        }
+    }
+
+    //할 일 추가 버튼
+    btn.addEventListener("click", function(){
+        mylist(txt.value,num,'none'); 
+        txt.value="";
+        num++;
+    });
+
+    //리스트 생성
+    function mylist(cont,num,dec) {
+        content.innerHTML += "<li class='to' id=" + num + "><span class='todo' style='text-decoration:"+dec+
+            "'>"+ cont + "</span><span class='remove'>❌</span></li>";
+        //리스트가 미리 작성되는 것이 아니라 클릭시 새로 추가되는 것이므로 여기서 불러줘야 작동한다..
+        eventBtn();
+        setItems(cont,num,dec);
+    };
+
+    //이벤트 추가
+    function eventBtn() {
+        Array.from(todo).forEach(event => event.addEventListener("click", clear));
+        Array.from(remove).forEach(event => event.addEventListener("click", del));
+    }
+    
+    //localstorage에 아이템 셋팅
+    function setItems(list,num,decoration) {
+        let todoList = {
+            txt: list,
+            id: num,
+            deco: decoration
+        };
+        arrTodo.push(todoList);
+        localStorage.setItem("items", JSON.stringify(arrTodo));
+    }
+
+    //리스트 완료 표시
+    function clear() {
+        if (this.style.textDecoration != "line-through") {
+            this.style.textDecoration = "line-through";
+            arrTodo[this.parentNode.id].deco='line-through';
+            localStorage.setItem("items",JSON.stringify(arrTodo));
+        }
+        else {
+            this.style.textDecoration = "none"
+            arrTodo[this.parentNode.id].deco='none';
+            localStorage.setItem("items",JSON.stringify(arrTodo));
+        }
+    }
+
+    //리스트 제거
+    function del() {
+        const pNode = this.parentNode;
+        pNode.remove(); //리스트 태그 제거(li)
+        const arrTodoC = arrTodo.filter(function (todo) {
+            return todo.id != parseInt(pNode.id);
+        });
+        arrTodo = arrTodoC;
+        localStorage.setItem("items", JSON.stringify(arrTodo));
+    }
+
+    loadList();
+
+</script>
+</html>
