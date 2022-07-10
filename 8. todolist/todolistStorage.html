@@ -121,9 +121,11 @@
 
     //할 일 추가 버튼
     btn.addEventListener("click", function(){
+        if(txt.value!=''){
         mylist(txt.value,num,'none'); 
         txt.value="";
         num++;
+        }
     });
 
     //리스트 생성
@@ -183,8 +185,6 @@
         arrTodo = arrTodoC;
         localStorage.setItem("items", JSON.stringify(arrTodo));
     }
-
-    
 
     setTimeout(function(){
         loading.style.display='none';
