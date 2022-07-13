@@ -12,6 +12,7 @@
             padding: 0;
         }
         .loading{
+            background:linear-gradient(45deg,rgb(237, 222, 255),#d3e8ff);
             width:300px;
             height:400px;
             margin: auto;
@@ -186,10 +187,11 @@
         localStorage.setItem("items", JSON.stringify(arrTodo));
     }
 
-    setTimeout(function(){
+    loading.onclick=function(){
         loading.style.display='none';
         box.style.display='flex';
         loadList();
-    },1000);
+    };
+
 </script>
 </html>
