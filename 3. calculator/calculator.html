@@ -75,12 +75,14 @@
         </tr>
     </table>
     <script>
-        var arr = ""; //입력값 저장하는 배열
+        var arr = ""; //입력값 저장하는 문자열
         var result = document.getElementById("result"); //입력값, 결과값 보여주는 창
 
+        //getElements~와 query둘다 사용가능함
+
         //사칙연산, 소수점 클릭시 이벤트(inputC) 발생 
-        var choice = document.querySelectorAll(".c");
-        choice.forEach((target) => target.addEventListener("click", inputC));
+        var choice = document.getElementsByClassName("c");
+        Array.from(choice).forEach((target) => target.addEventListener("click", inputC));
 
         //숫자 클릭시 이벤트 발생
         var num = document.querySelectorAll(".n");
@@ -90,10 +92,11 @@
         function inputC() {
             const lastChar = arr[arr.length - 1];
             //사칙연산, 소수점 2번 이상 입력 방지
-            if (lastChar == "+" || lastChar == "-" || lastChar == "*" || lastChar == "/" ||lastChar==".") {}
+            if (lastChar == "+" || lastChar == "-" || lastChar == "*" || lastChar == "/" || lastChar == ".") { }
             //첫번째 자리에 연산자 *, / 입력 방지
-            else if(arr==""&&this.innerText=="x"||this.innerText=="÷"){}
+            else if ((arr == "" && this.innerText == "x") || (arr == "" && this.innerText == "÷")) { }
             else {
+                //replace()사용하면 간략해질 수 있을 듯
                 if (this.innerText == "x") arr += "*";
                 else if (this.innerText == "÷") arr += "/";
                 else arr += this.innerText;
@@ -110,12 +113,15 @@
 
         //결과값 출력 함수
         function final() {
-            //eval 함수 대체 new Function(), new 생략하여 사용
+            //eval 함수 대체 new Function(), new 생략하여 사용가능
             if (arr != "") {
-                const show = Function('return ' + arr)();
+                //즉시 실행 함수
+                const show = (new Function('return ' + arr)());
                 result.innerHTML = show;
             }
         }
+
+        window.function
 
         //초기화 함수
         function remove() {
@@ -127,3 +133,5 @@
 </body>
 
 </html>
+
+
