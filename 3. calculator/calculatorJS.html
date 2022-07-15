@@ -164,8 +164,8 @@
         </div>
     </div>
     <script>
+        //엄격 모드
         "use strict";
-
         var input = document.getElementById('input'), // input/output button
             number = document.querySelectorAll('.numbers div'), // number buttons
             operator = document.querySelectorAll('.operators div'), // operator buttons
@@ -230,7 +230,7 @@
             var inputString = input.innerHTML;
 
             // forming an array of numbers. eg for above string it will be: numbers = ["10", "26", "33", "56", "34", "23"]
-            var numbers = inputString.split(/\+|\-|\×|\÷/g);
+            var numbers = inputString.split(/ \+ | \- | \× | \÷ /g);
 
             // forming an array of operators. for above string it will be: operators = ["+", "+", "-", "*", "/"]
             // first we replace all the numbers and dot with empty string and then split

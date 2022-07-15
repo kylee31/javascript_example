@@ -49,8 +49,8 @@
         <tr id="operator">
             <td class="c">+</td>
             <td class="c">-</td>
-            <td class="c">x</td>
-            <td class="c">÷</td>
+            <td class="c">x</td> <!--unicode &times;-->
+            <td class="c">÷</td> <!--unicode &divide;-->
         </tr>
         <tr>
             <td class="n">7</td>
@@ -84,7 +84,7 @@
         var choice = document.getElementsByClassName("c");
         Array.from(choice).forEach((target) => target.addEventListener("click", inputC));
 
-        //숫자 클릭시 이벤트 발생
+        //숫자 클릭시 이벤트(calcN) 발생
         var num = document.querySelectorAll(".n");
         num.forEach((target) => target.addEventListener("click", calcN));
 
@@ -96,10 +96,11 @@
             //첫번째 자리에 연산자 *, / 입력 방지
             else if ((arr == "" && this.innerText == "x") || (arr == "" && this.innerText == "÷")) { }
             else {
-                //replace()사용하면 간략해질 수 있을 듯
-                if (this.innerText == "x") arr += "*";
+                //replace()사용하면 간략해질 수 있을 듯 (변경 완)
+                /*if (this.innerText == "x") arr += "*";
                 else if (this.innerText == "÷") arr += "/";
-                else arr += this.innerText;
+                else arr += this.innerText;*/
+                arr += this.innerText.replace("x","*").replace("÷","/");
                 result.innerHTML += this.innerText;
             }
         }
@@ -120,8 +121,6 @@
                 result.innerHTML = show;
             }
         }
-
-        window.function
 
         //초기화 함수
         function remove() {
