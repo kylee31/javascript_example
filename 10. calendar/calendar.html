@@ -12,7 +12,9 @@
             padding: 0;
         }
 
-        body {
+        .cal {
+            z-index: -1;
+            height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -20,39 +22,115 @@
         }
 
         .day {
+            display: inline-block;
             width: 50px;
             height: 50px;
-            border: 1px solid lightgray;
+            text-align: center;
+        }
+        /*버튼 위치 고정하기.. 확대해도 달력이랑 같은 고정된 위치에서 커지고 작아지기..*/
+        .btn {
+            z-index: 1;
+            font-size:1.5rem;
+            cursor:pointer;
+        }
+        .btn span {
+            position: absolute;
+            top: 50%;
+        }
+
+        #left {
+            left: 400px;
+        }
+
+        #right {
+            right: 400px;
         }
     </style>
 </head>
 
 <body>
     <div class="cal">
-        <h1>2022</h1>
-        <div id="month"></div>
+        <h1 id="year"></h1>
+        <div id="month"></div><br>
         <div class="date"></div>
+    </div>
+    <div class="btn">
+        <span id="left">◀</span><span id="right">▶</span>
     </div>
     <script>
         const monthBox = document.getElementById("month");
         const dateBox = document.querySelector(".date");
+        const year=document.getElementById("year");
 
         const month = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
         let date = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-        const day = ["mon", "tue", "wed", "thu", "fri", "sat", "sun"];
+        const day = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
 
-        const now = new Date();
-        //이전달 마지막 날의 요일 구하기
-        const prev= now.getMonth();
+        const left = document.getElementById("left");
+        const right = document.getElementById("right");
 
-        console.log(prev);
+        let count=0;
 
-        function cal() {
-            monthBox.innerHTML = month[now.getMonth()];
+        var now = new Date();
+        let thisMonth=now.getMonth();
+
+        //윤년 구하기 (2월의 마지막날 28일, 29일)
+        //===와 ==의 차이?
+        if((now.getFullYear()%4==0 && now.getFullYear()%100!=0)||now.getFullYear()%400==0){
+            date[1]=29;
         }
 
-        cal();
+        function cal(monthNum) {
+            //이전달 마지막 날의 요일 구하기
+            const prev = new Date(now.getFullYear(),monthNum);
+            //console.log(prev);
+            //일요일부터 토요일까지 0~6
 
+            //console.log(prev.getDay()-1);
+            //console.log(day[prev.getDay()-1]);
+
+            monthBox.innerHTML = month[monthNum];
+            for (i = 0; i < 7; i++) {
+                dateBox.innerHTML += "<div class='day'>" + day[i] + "</div>";
+            }
+            dateBox.innerHTML += "<br>";
+            for (i = 0; i < (prev.getDay()); i++) {
+                dateBox.innerHTML += "<div class='day'>&nbsp</div>";
+            }
+            for (i = 0; i < date[monthNum]; i++) {
+                const n = i + prev.getDay() + 1;
+                dateBox.innerHTML += "<div class='day'>" + (i + 1) + "</div>";
+                if (n != 0 && n % 7 == 0) {
+                    dateBox.innerHTML += "<br>";
+                }
+            }
+        }
+
+        function del(){
+            dateBox.innerHTML="";
+        }
+
+        left.addEventListener("click", function () {
+            if(thisMonth+count!=0){
+            del();
+            count--;
+            cal(thisMonth+count);
+            }
+        });
+
+        right.addEventListener("click",function(){
+            if(thisMonth+count!=11){
+                del();
+                count++;
+                cal(thisMonth+count);
+            }
+        });
+        function init(){
+            year.innerHTML=now.getFullYear();
+            cal(thisMonth);
+        }
+
+        init();
     </script>
 </body>
 
