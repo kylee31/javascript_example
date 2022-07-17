@@ -10,57 +10,68 @@
         * {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
+        }
+
+        .box {
+            width: 1000px;
+            height:500px;
+            margin: 0 auto;
+            position: relative;
         }
 
         .cal {
             z-index: -1;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
+            position: absolute;
+            margin:100px 360px;
+        }
+
+        #year,#month{
+            text-align: center;
         }
 
         .day {
             display: inline-block;
-            width: 50px;
-            height: 50px;
+            width: 40px;
+            height: 40px;
             text-align: center;
+            border:1px solid lightblue;
         }
+
         /*버튼 위치 고정하기.. 확대해도 달력이랑 같은 고정된 위치에서 커지고 작아지기..*/
-        .btn {
-            z-index: 1;
-            font-size:1.5rem;
-            cursor:pointer;
-        }
         .btn span {
+            z-index: 1;
+            font-size: 1.5rem;
             position: absolute;
-            top: 50%;
+            cursor: pointer;
+            top:50%;
         }
 
         #left {
-            left: 400px;
+            left: 300px;
         }
 
         #right {
-            right: 400px;
+            right: 300px;
         }
     </style>
 </head>
 
 <body>
-    <div class="cal">
-        <h1 id="year"></h1>
-        <div id="month"></div><br>
-        <div class="date"></div>
-    </div>
-    <div class="btn">
-        <span id="left">◀</span><span id="right">▶</span>
+    <div class="box">
+        <div class="cal">
+            <h1 id="year"></h1>
+            <div id="month"></div><br>
+            <div class="date"></div>
+        </div>
+        <div class="btn">
+            <span id="left">◀</span><span id="right">▶</span>
+        </div>
     </div>
     <script>
         const monthBox = document.getElementById("month");
         const dateBox = document.querySelector(".date");
-        const year=document.getElementById("year");
+        const year = document.getElementById("year");
 
         const month = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
         let date = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
@@ -69,20 +80,20 @@
         const left = document.getElementById("left");
         const right = document.getElementById("right");
 
-        let count=0;
+        let count = 0;
 
         var now = new Date();
-        let thisMonth=now.getMonth();
+        let thisMonth = now.getMonth();
 
         //윤년 구하기 (2월의 마지막날 28일, 29일)
         //===와 ==의 차이?
-        if((now.getFullYear()%4==0 && now.getFullYear()%100!=0)||now.getFullYear()%400==0){
-            date[1]=29;
+        if ((now.getFullYear() % 4 == 0 && now.getFullYear() % 100 != 0) || now.getFullYear() % 400 == 0) {
+            date[1] = 29;
         }
 
         function cal(monthNum) {
             //이전달 마지막 날의 요일 구하기
-            const prev = new Date(now.getFullYear(),monthNum);
+            const prev = new Date(now.getFullYear(), monthNum);
             //console.log(prev);
             //일요일부터 토요일까지 0~6
 
@@ -106,27 +117,27 @@
             }
         }
 
-        function del(){
-            dateBox.innerHTML="";
+        function del() {
+            dateBox.innerHTML = "";
         }
 
         left.addEventListener("click", function () {
-            if(thisMonth+count!=0){
-            del();
-            count--;
-            cal(thisMonth+count);
+            if (thisMonth + count != 0) {
+                del();
+                count--;
+                cal(thisMonth + count);
             }
         });
 
-        right.addEventListener("click",function(){
-            if(thisMonth+count!=11){
+        right.addEventListener("click", function () {
+            if (thisMonth + count != 11) {
                 del();
                 count++;
-                cal(thisMonth+count);
+                cal(thisMonth + count);
             }
         });
-        function init(){
-            year.innerHTML=now.getFullYear();
+        function init() {
+            year.innerHTML = now.getFullYear();
             cal(thisMonth);
         }
 
