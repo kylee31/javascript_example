@@ -71,7 +71,7 @@
 <body>
     <!--드럼킷 이미지, 버튼-->
     <div id="drum">
-        <img src="drums.jpg" alt="drumkit">
+        <img src="src/drums.jpg" alt="drumkit">
         <button type="button" id="e" class="btn">E</button>
         <button type="button" id="r" class="btn">R</button>
     </div>
@@ -85,10 +85,11 @@
         </table>
     </div>
     <script>
-        var btn = document.querySelectorAll(".btn");
-        var crush = new Audio("bubble.wav");
-        var ride = new Audio("shout.wav");
-        var alphabet, keyC;
+        const btn = document.querySelectorAll(".btn");
+        //오디오 객체 사용
+        const crush = new Audio("src/bubble.wav");
+        const ride = new Audio("src/shout.wav");
+        let alphabet, keyC;
 
         //각각의 버튼에 click 이벤트 추가
         btn.forEach((target) => target.addEventListener("click", sound));
@@ -96,6 +97,7 @@
         //버튼 선택 시 태그 안 값 받아서 소리 출력하기
         function sound() {
             alphabet = this.innerText;
+            //switch문 사용
             switch (alphabet) {
                 case "E": crush.play(); break;
                 case "R": ride.play(); break;
@@ -104,12 +106,14 @@
         }
 
         //키보드 입력시 키보드값 구분하여 소리 출력
-        var keyP = document.addEventListener("keydown", e => {
+        document.addEventListener("keydown", e => {
+            //키보드이벤트 key프로퍼티
             keyC = e.key;
 
             console.log(keyC);
 
             switch (keyC) {
+                //audio 메소드 play()
                 case "E": crush.play(); break;
                 case "R": ride.play(); break;
             }

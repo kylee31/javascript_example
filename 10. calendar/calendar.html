@@ -82,18 +82,19 @@
 
         let count = 0;
 
-        var now = new Date();
+        const now = new Date();
         let thisMonth = now.getMonth();
+        let thisYear=now.getFullYear();
 
         //윤년 구하기 (2월의 마지막날 28일, 29일)
         //===와 ==의 차이?
-        if ((now.getFullYear() % 4 == 0 && now.getFullYear() % 100 != 0) || now.getFullYear() % 400 == 0) {
+        if ((thisYear % 4 == 0 && thisYear % 100 != 0) || thisYear % 400 == 0) {
             date[1] = 29;
         }
 
         function cal(monthNum) {
             //이전달 마지막 날의 요일 구하기
-            const prev = new Date(now.getFullYear(), monthNum);
+            const prev = new Date(thisYear, monthNum);
             //console.log(prev);
             //일요일부터 토요일까지 0~6
 
@@ -137,7 +138,8 @@
             }
         });
         function init() {
-            year.innerHTML = now.getFullYear();
+            
+            year.innerHTML = thisYear;
             cal(thisMonth);
         }
 
