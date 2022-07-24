@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>shopping</title>
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+    }
+    body{
+        padding-top:100px;
+    }
+    .header {
+        top: 0;
+        left: 0;
+        right: 0;
+        color: rgb(33, 14, 145);
+        display:flex;
+        position:fixed;
+        background: linear-gradient(45deg,#fffde2, #d2e7ff);
+    }
+    .header h1{
+        display:inline-block;
+        margin:20px 100px;
+    }
+    .menu{
+        display:flex;
+        justify-content:center;
+        align-items: center;
+    }
+    .menu li {
+        display: inline-block;
+        list-style-type: none;
+        padding: 0 50px;
+        font-weight:900;
+        font-size:1.1rem;
+    }
+    .menu li:hover{
+        color:rgb(84, 203, 236);
+        text-decoration: underline;
+        cursor:pointer;
+    }
+    li+li{
+        border-left:1px solid rgb(95, 95, 95);
+    }
+    .title{
+        display:flex;
+        justify-content:center;
+        align-items: center;
+    }
+    .content{
+        display:flex;
+        justify-content:center;
+        align-items: center;
+        margin-left:10%;
+    }
+    .item{
+        display:inline-block;
+    }
+    .itemBox{
+        display:inline-block;
+        margin: 20px;
+        font-weight:900;
+        color:rgb(78, 78, 78);
+        text-align: center;
+    }
+</style>
+
+<body>
+    <div class="header">
+        <h1>Art Studio</h1>
+        <ul class="menu">
+            <li>Home</li>
+            <li>Shop</li>
+            <li>About</li>
+            <li>Company</li>
+        </ul>
+    </div>
+    <h1 class="title">Essentials</h1>
+    <div class="content">
+        <div class="item"></div>
+    </div>
+    <script>
+        const item=document.querySelector(".item");
+        const img=["src/4.jpg","src/5.jpg","src/6.jpg","src/1.jpg","src/2.jpg","src/3.jpg"];
+        const name=["brushs", "brush&paint", "sketchbook","roller", "brush", "paints"];
+        const price=[5.5, 15.5, 4,0, 9.9, 6.0, 10.0];
+
+        function itemList(){
+            for(i=0;i<img.length;i++){
+                item.innerHTML+="<div class='itemBox'><img src='"+img[i]+"' style='width:300px;height:400px;'><br>"+name[i]+"<br>"+"$"+price[i]+"</div>";
+            }
+        }
+        itemList();
+    </script>
+</body>
+</html>
