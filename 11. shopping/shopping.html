@@ -23,6 +23,7 @@
         display:flex;
         position:fixed;
         background: linear-gradient(45deg,#fffde2, #d2e7ff);
+        z-index: 1;
     }
     .header h1{
         display:inline-block;
@@ -54,6 +55,7 @@
         align-items: center;
     }
     .content{
+        z-index: -1;
         display:flex;
         justify-content:center;
         align-items: center;
@@ -69,34 +71,97 @@
         color:rgb(78, 78, 78);
         text-align: center;
     }
+    .itemBox button{
+        width:20px;
+        height:20px;
+        background-color: rgba(181, 181, 181, 0.598);
+        border:none;
+    }
+    .itemBox>button:active{
+        background-color: rgba(77, 184, 255, 0.598);
+        border:1px solid black;
+    }
 </style>
 
 <body>
     <div class="header">
-        <h1>Art Studio</h1>
+        <h1 class="logo">Art Studio</h1>
         <ul class="menu">
             <li>Home</li>
             <li>Shop</li>
             <li>About</li>
             <li>Company</li>
         </ul>
+        <h1 class="shoppingList">☁</h1>
     </div>
+    <div class="box">
     <h1 class="title">Essentials</h1>
     <div class="content">
         <div class="item"></div>
     </div>
+</div>
     <script>
         const item=document.querySelector(".item");
         const img=["src/4.jpg","src/5.jpg","src/6.jpg","src/1.jpg","src/2.jpg","src/3.jpg"];
         const name=["brushs", "brush&paint", "sketchbook","roller", "brush", "paints"];
-        const price=[5.5, 15.5, 4,0, 9.9, 6.0, 10.0];
+        const price=[19.9, 15.5, 4.0, 9.9, 6.0, 10];
+        let count=[0,0,0,0,0,0];
 
+        //아이템 생성
         function itemList(){
             for(i=0;i<img.length;i++){
-                item.innerHTML+="<div class='itemBox'><img src='"+img[i]+"' style='width:300px;height:400px;'><br>"+name[i]+"<br>"+"$"+price[i]+"</div>";
+                item.innerHTML+="<div class='itemBox'><img src='"+img[i]+"' style='width:300px;height:400px;' class='myImg'><br>"+"<button type='button' class='minus' data-num='"+i+"'>-</button> "
+                    +name[i]+" <button type='button' class='plus' data-num='"+i+"'>+</button>"+"<br>"+"$"+price[i]+"</div>";
             }
         }
         itemList();
+
+        //홈페이지
+        const logo=document.querySelector(".logo");
+        logo.addEventListener("click", function(){
+            location.href="shopping.html";
+        });
+
+        //이미지 확대 애니메이션
+        const imgItem=document.querySelectorAll(".myImg");
+        imgItem.forEach((target) => target.addEventListener("mouseover", transImg));
+        function transImg(e){
+            e.target.style.transition='all ease-in-out .5s';
+            e.target.style.transform='scale(1.2)';
+        }
+        imgItem.forEach((target) => target.addEventListener("mouseout", transImage));
+        function transImage(e){
+            e.target.style.transform='scale(1)';
+        }
+
+        //아이템 빼기
+        const minusItem=document.querySelectorAll(".minus");
+        minusItem.forEach((target)=>target.addEventListener("click",minusList));
+        function minusList(e){
+            if(count[e.target.dataset.num]>0){
+            count[e.target.dataset.num]--;
+            console.log(count[e.target.dataset.num]);
+            console.log(count);
+            }
+        }
+
+        //아이템 더하기
+        const plusItem=document.querySelectorAll(".plus");
+        plusItem.forEach((target)=>target.addEventListener("click",plusList));
+        function plusList(e){
+            count[e.target.dataset.num]++;
+            console.log(count[e.target.dataset.num]);
+            console.log(count);
+        }
+
+        //쇼핑리스트 출력하기
+        //클릭하면 페이지 이동
+        const shoppingList=document.querySelector(".shoppingList");
+        const box=document.querySelector(".box");
+        shoppingList.addEventListener("click",myList);
+        function myList(){
+            //location.href="shopping.html";
+        }
     </script>
 </body>
 </html>
