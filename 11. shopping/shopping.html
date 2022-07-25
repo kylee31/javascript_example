@@ -65,6 +65,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        color:rgb(91, 91, 91);
     }
 
     .content {
@@ -142,7 +143,6 @@
     </div>
     <div class="cart">
         <table class="cartList">
-            <tr><td colspan='2'>Empty Cart 💬</td></tr>
         </table>
     </div>
     <script>
@@ -185,8 +185,6 @@
         function minusList(e) {
             if (count[e.target.dataset.num] > 0) {
                 count[e.target.dataset.num]--;
-                //console.log(count[e.target.dataset.num]);
-                //console.log(count);
                 cartList.innerHTML="";
                 myCart();
             }
@@ -197,8 +195,6 @@
         plusItem.forEach((target) => target.addEventListener("click", plusList));
         function plusList(e) {
             count[e.target.dataset.num]++;
-            //console.log(count[e.target.dataset.num]);
-            //console.log(count);
             cartList.innerHTML="";
             myCart();
         }
@@ -215,7 +211,7 @@
             
         }
 
-        //쇼핑리스트 생성
+        //쇼핑리스트 생성하기
         const cartList = document.querySelector(".cartList");
         function myCart() {
             let sum=0;
@@ -232,6 +228,8 @@
                 cartList.innerHTML+="<tr><td colspan='2' style='border-top:3px dotted gray'>price : $"+Math.round(sum*100)/100+"</td></tr>";
             }
         }
+
+        myCart();
 
     </script>
 </body>

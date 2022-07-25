@@ -184,11 +184,11 @@
         }
     }
 
-    //기회 검사하기
+    //기회 검사하기 (실패 시 정답 보여주기)
     function life() {
         if (live == 0) {
-            show.innerHTML = "FAIL😓";
-            setTimeout(init, 600);
+            show.innerHTML = "FAIL😓"+"<br>The answer is <span style='color:green'>"+o+"</span>";
+            setTimeout(init, 800);
         }
     }
 
