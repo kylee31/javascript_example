@@ -74,7 +74,7 @@
     var a = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
     //속성,값 쌍 형식 딕셔너리 활용해서 힌트 보여주기?
     //단어
-    var fruit = ["apple", "banana", "melon", "grape", "peach", "watermelon"];
+    var fruit = ["apple", "banana", "melon", "grape", "peach", "watermelon","orange"];
     var show = document.getElementById("show");
     var btn = document.getElementsByClassName("box");
     var word = document.getElementsByClassName("word");
@@ -107,16 +107,31 @@
         console.log(o);
 
         show.innerHTML = "";
-        //단어 길이만큼 _ 넣기
-        for (i = 0; i < o.length; i++) {
-            show.innerHTML += "<span class='word'>_</span>";
+
+        //마지막 단어까지 맞춘 경우
+        if (fruit.length == 0) {
+            setTimeout(function () {
+                for (i = 0; i < 26; i++) {
+                    btn[i].style.visibility = "visible";
+                }
+                live = 5;
+                showlive.innerHTML = live;
+                show.innerHTML = "Finish👏";
+            }, 300);
+        }
+        //맞춰야 하는 단어가 남아있는 경우
+        else {
+            //단어 길이만큼 _ 넣기
+            for (i = 0; i < o.length; i++) {
+                show.innerHTML += "<span class='word'>_</span>";
+            }
         }
     }
 
     //js에서 선언한 class와 html에서 선언한 class의 차이점 때문인건가??
     //get~와 query~의 차이점을 모르겠음..
     //어떤점이 다르길래 이렇게 써야하는건지?
-    //꼭 자세히 공부하기
+    //아무튼 get~은 array가 필요하고 query는 foreach로만 사용가능함
 
     //버튼 이벤트
     Array.from(btn).forEach(event => event.addEventListener("click", choice));
@@ -141,7 +156,7 @@
             live--;
             showlive.innerHTML = live;
         }
-        
+
         //누른 버튼 안보이기
         this.style.visibility = "hidden";
         //단어 완성도 검사
@@ -152,43 +167,33 @@
 
     //완성된 단어 검사하기
     function correct() {
-        var mine = document.getElementsByClassName("word");
-        //span의 innertext 하나의 배열에 저장하기
+        //span의 innertext를 하나의 문자열로 저장하기
+        //배열로 작성하려면 my=[]; my.push(word[i].innerText);로 작성해야함
+        //배열로 작성하면 알파벳이 각각 요소로 저장되므로 문자열로 추가하여 사용했음
+        //배열로 담으려면 toString(), join(), JSON.stringify() 활용해서 변환 후 이용하기?
         var my = "";
-        for (i = 0; i < mine.length; i++) {
-            my += mine[i].innerText;
+        for (i = 0; i < word.length; i++) {
+            my += word[i].innerText;
         }
 
         //완성단어와 정답이 같으면 실행
         if (my == o) {
             //단어 중복되지 않도록 배열에서 제거 splice()메소드 사용
             fruit.splice(num, 1);
-            if (fruit.length != 0) {
-                setTimeout(function(){
-                    show.innerHTML = "SUCCESS😆";
-                },400);            
-                setTimeout(init, 1000);
 
-            }
-            //마지막 단어까지 맞춘 경우
-            else {
-                setTimeout(function () {
-                    for (i = 0; i < 26; i++) {
-                        btn[i].style.visibility = "visible";
-                    }
-                    live = 5;
-                    showlive.innerHTML = live;
-                    show.innerHTML = "CLEAR👏";
-                }, 500);
-            }
+            setTimeout(function () {
+                show.innerHTML = "SUCCESS😆";
+            }, 400);
+            setTimeout(init, 1000);
         }
     }
 
     //기회 검사하기 (실패 시 정답 보여주기)
     function life() {
         if (live == 0) {
-            show.innerHTML = "FAIL😓"+"<br>The answer is <span style='color:green'>"+o+"</span>";
-            setTimeout(init, 800);
+            fruit.splice(num, 1);
+            show.innerHTML = "FAIL😓" + "<br>The answer is <span style='color:green'>" + o + "</span>";
+            setTimeout(init, 1000);
         }
     }
 

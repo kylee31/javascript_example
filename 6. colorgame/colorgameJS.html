@@ -116,6 +116,8 @@
         <div class="square"></div>
     </div>
     <script>
+        //var로 변수를 선언하는 것은 좋지 않음.. 오류 가능성 있음
+        //const와 let으로 변경
         var numSquares = 6;
         var colors = [];
         var pickedColor;
@@ -130,6 +132,7 @@
 
         init();
 
+        //시작
         function init() {
             colorDisplay.textContent = pickedColor;
             setupSquares();
@@ -141,6 +144,7 @@
             reset();
         });
 
+        //정답 여부 확인
         function setupSquares() {
             for (var i = 0; i < squares.length; i++) {
                 squares[i].style.backgroundColor = colors[i];
@@ -159,6 +163,7 @@
             }
         }
 
+        //모드 설정 (easy, hard)
         function setupMode() {
             for (var i = 0; i < modeButtons.length; i++) {
                 modeButtons[i].addEventListener("click", function () {
@@ -177,6 +182,7 @@
             }
         }
 
+        //초기화
         function reset() {
             colors = genRandomColors(numSquares);
             pickedColor = chooseColor();
@@ -184,6 +190,7 @@
             h1.style.backgroundColor = "#2C8E99";
             resetButton.textContent = "New Colors";
             messageDisplay.textContent = "";
+            //상자 개수만큼 color 지정
             for (var i = 0; i < squares.length; i++) {
                 if (colors[i]) {
                     squares[i].style.display = "block";
@@ -195,6 +202,7 @@
             }
         }
 
+        //색상 변경(모두 같은 색)
         function changeColors(color) {
             for (var i = 0; i < squares.length; i++) {
                 squares[i].style.backgroundColor = color;
@@ -202,11 +210,13 @@
             }
         }
 
+        //정답 색상 선택
         function chooseColor() {
             var random = Math.floor(Math.random() * colors.length);
             return colors[random];
         }
 
+        //랜덤 색상 개수
         function genRandomColors(num) {
             var arr = [];
             for (var i = 0; i < num; i++) {
@@ -215,6 +225,7 @@
             return arr;
         }
 
+        //색상 만들기
         function makeColor() {
             var r = Math.floor(Math.random() * 256);
             var g = Math.floor(Math.random() * 256);

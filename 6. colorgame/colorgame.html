@@ -72,11 +72,13 @@
 
 <body>
     <div class="game">
+        <!--컬러 rgb 보여주기-->
         <div class="title">
             THE GREAT
             <h1 id="result">RGB(0,0,0)</h1>
             GUESSING GAME
         </div>
+        <!--색상 메뉴바-->
         <div>
             <ul>
                 <li id="colorC" onclick="newC()">NEW COLORS</li>
@@ -84,6 +86,7 @@
                 <li id="hard" onclick="mode()">HARD</li>
             </ul>
         </div>
+        <!--팔레트-->
         <div class="palette">
             <div class="box"></div>
             <div class="box"></div>
@@ -107,10 +110,8 @@
         //컬러상자 클래스로 가져오기
         var colorBox = document.getElementsByClassName("box");
         var colorO;
-        //컬러박스 마우스 클릭 이벤트
-        Array.from(colorBox).forEach(color => color.addEventListener("click", colorClick));
 
-        //rgb 색상 만들기 (math() 메소드 사용)
+        //rgb 랜덤 색상 만들기 (math() 메소드 사용)
         function makeColor() {
             const r = Math.floor(Math.random() * 256);
             const g = Math.floor(Math.random() * 256);
@@ -129,14 +130,20 @@
                 colorBox[i].style.backgroundColor = makeColor();
             }
             var colorGuess = document.getElementById("result");
+            //설정된 6개의 색상 중 하나를 랜덤으로 고르는 코드 
             colorO = String(colorBox[Math.floor(Math.random() * 6)].style.backgroundColor).toUpperCase();
             colorGuess.innerHTML = colorO;
         }
+        //컬러박스 마우스 클릭 이벤트
+        //이렇게 하나하나 다 부여하지 않고 <div class='palette'> 태그 이용하여 e.target을 이용하여 자식 태그에 이벤트 부여 가능
+        //Array.from(colorBox).forEach(color => color.addEventListener("click", colorClick));
 
+        document.querySelector(".palette").addEventListener("click",colorClick);
         //colorClick()
         //정답여부 판별
         function colorClick(event) {
             const color = event.target.style.backgroundColor;
+            //rgb는 소문자로 출력되는데, makeColor()에서 대문자로 작성했으므로 toLowerCase() 메소드 사용
             if (color == colorO.toLowerCase()) {
                 o = num;
                 num++;
@@ -144,10 +151,10 @@
                 newC();
             }
             else {
-                
                 //클릭한 상자가 오답이면 컬러박스 지우기
-                //JavaScript로 visibility 사용해야 할듯, 생각해보니 배경색 설정은 그냥 눈속임 정도...
-                this.style.visibility="hidden";
+                //JavaScript로 visibility 사용해야 할듯, 배경색 설정은 그냥 눈속임
+                //처음 코드에서는 배경색을 변경했지만 visibility 사용이 훨씬 효율적이라고 생각해서 변경(리팩토링)
+                event.target.style.visibility="hidden";
                 alert("❌");
                 x++;
 
