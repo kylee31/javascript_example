@@ -85,9 +85,7 @@
     </style>
 </head>
 <body>
-    <!--첫페이지(표지)-->
     <div class="loading">📚TODO-LIST</div>
-    <!--투두리스트-->
     <div class="box">
         <h1>TODO LIST</h1>
         <div><input id="txt" type="text"><button type="button" id="btn">+</button></div>
@@ -99,21 +97,17 @@
     const btn = document.getElementById("btn");
     const txt = document.getElementById("txt");
     const content = document.getElementById("content");
-    const todo = document.getElementsByClassName("todo");
-    const remove = document.getElementsByClassName("remove");
     const box=document.querySelector(".box");
     const loading=document.querySelector(".loading");
 
     let arrTodo = [];
     let num=0;
-    //localStorage에서 받아온 데이터를 JavaScript 객체로 변환
     const obj = JSON.parse(localStorage.getItem("items"));
 
     //저장되어 있는 리스트 보여주기
     function loadList() {
         let arr = 0;
-        if (obj == null || obj == "") {} //입력창이 비어있는 경우 예외처리
-        else {    
+        if (obj != null || obj != "") { //입력창이 비어있지 않은 경우
             num = obj.length;
             for (i = 0; i < obj.length; i++) {
                 mylist(obj[i].txt,arr,obj[i].deco);
@@ -135,18 +129,14 @@
     function mylist(cont,num,dec) {
         content.innerHTML += "<li class='to' id=" + num + "><span class='todo' style='text-decoration:"+dec+
             "'>"+ cont + "</span><span class='remove'>❌</span></li>";
-        //리스트가 미리 작성되는 것이 아니라 클릭시 새로 추가되는 것이므로 여기서 불러줘야 작동한다..
-        //동적 이벤트 할당으로 변경해보기
-        //이렇게 하면 리스트 생성(+버튼) 누를때마다 배열에 이벤트가 설정되므로 리팩토링이 필요해보임 
-        eventBtn();
         setItems(cont,num,dec);
     };
 
-    //이벤트 추가
-    function eventBtn() {
-        Array.from(todo).forEach(event => event.addEventListener("click", clear));
-        Array.from(remove).forEach(event => event.addEventListener("click", del));
-    }
+    //완료, 삭제 이벤트
+    document.addEventListener("click",function(e){
+        if(e.target.className=='todo') clear(e);
+        else if(e.target.className=='remove') del(e);
+    });
     
     //localstorage에 아이템 셋팅
     function setItems(list,num,decoration) {
@@ -156,25 +146,24 @@
             deco: decoration
         };
         arrTodo.push(todoList);
-        //JSON문자열로 데이터 저장
         localStorage.setItem("items", JSON.stringify(arrTodo));
     }
 
     //리스트 완료 표시
-    function clear() {
-        if (this.style.textDecoration != "line-through") {
-            this.style.textDecoration = "line-through";
+    function clear(e) {
+        if (e.target.style.textDecoration != "line-through") {
+            e.target.style.textDecoration = "line-through";
             //리스트를 삭제했을 경우 인덱스번호와 id가 맞지않으므로, id와 맞는 배열의 인덱스 번호를 찾는게 중요!!!!
             for(i=0;i<arrTodo.length;i++){
-                if(arrTodo[i].id==this.parentNode.id)
+                if(arrTodo[i].id==e.target.parentNode.id)
                     arrTodo[i].deco='line-through';
             }
             localStorage.setItem("items",JSON.stringify(arrTodo));
         }
         else {
-            this.style.textDecoration = "none"
+            e.target.style.textDecoration = "none"
             for(i=0;i<arrTodo.length;i++){
-                if(arrTodo[i].id==this.parentNode.id)
+                if(arrTodo[i].id==e.target.parentNode.id)
                     arrTodo[i].deco="none";
             }
             localStorage.setItem("items",JSON.stringify(arrTodo));
@@ -182,10 +171,9 @@
     }
 
     //리스트 제거
-    function del() {
-        const pNode = this.parentNode;
+    function del(e) {
+        const pNode = e.target.parentNode;
         pNode.remove();
-        //filter메소드 사용
         const arrTodoC = arrTodo.filter(function (todo) {
             return todo.id != parseInt(pNode.id);
         });
@@ -193,6 +181,7 @@
         localStorage.setItem("items", JSON.stringify(arrTodo));
     }
 
+    //투두리스트 표지
     loading.onclick=function(){
         loading.style.display='none';
         box.style.display='flex';

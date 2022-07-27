@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>todolist</title>
     <style>
         * {
             margin: 0;
@@ -73,7 +73,6 @@
 <body>
     <div class="box">
         <h1>TODO LIST</h1>
-        <!--button submit 사용..? submit과 button 차이 확실히 알기-->
         <div><input id="txt" type="text" value=""><input type="button" value="+" id="btn"></div>
         <ul id="content"></ul>
     </div>
@@ -94,7 +93,7 @@
         }
     };
 
-    //버튼 클릭할때마다 Array~해서 이벤트 리스너 할당하는 것보단 이게 효과적인지..?
+    //버튼 클릭할때마다 Array~해서 이벤트 리스너 할당하는 것보단 이게 효과적인게 맞는지..?
     document.addEventListener('click', function (event) {
         if (event.target.className == 'todo') del(event);
         else if(event.target.className=='remove') remov(event);
