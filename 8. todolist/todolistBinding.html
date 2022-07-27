@@ -70,7 +70,6 @@
         }
     </style>
 </head>
-
 <body>
     <div class="box">
         <h1>TODO LIST</h1>
@@ -84,42 +83,33 @@
     const btn = document.getElementById("btn");
     const txt = document.getElementById("txt");
     const content = document.getElementById("content");
-    const todo = document.getElementsByClassName("todo");
-    const remove = document.getElementsByClassName("remove");
 
-
-    //버튼 클릭시 할일 추가
+    // + 버튼 클릭시 할일 추가
     btn.addEventListener("click", todoList);
 
-    //변수 값(let txtValue)으로 txt.value를 담아서 수정했는데 인풋에 작성했던 입력값이 지워지지 않음.. 왜..?
-    //이해완료
-    //변수에 담으면 txt.value 본연의 값이 바뀌는것이 아니니까. 원본을 바꿔줘야지 너무 당연한걸 잊었다..
-    //ok
     function todoList() {
         if (txt.value != "") {
-            //console.log(txt.value);
             content.innerHTML += "<li class='out'><span class='todo'>" + txt.value + "</span><span class='remove'>❌</span></li>";
             txt.value = "";
-            //클릭시 새로 추가되는 것(동적)이므로 배열을 여기서 불러줘야 작동한다..
-            //동적 이벤트 할당 코드 리팩토링?
-            //코드 효율성 측면에서 이게 맞는지? 
-            //클릭할때마다 이벤트 리스너로 이벤트가 할당되는것이라 효율성 나빠보이는데 맞는지..
-            Array.from(todo).forEach(event => event.addEventListener("click", del));
-            Array.from(remove).forEach(event => event.addEventListener("click", remov));
         }
     };
 
+    //버튼 클릭할때마다 Array~해서 이벤트 리스너 할당하는 것보단 이게 효과적인지..?
+    document.addEventListener('click', function (event) {
+        if (event.target.className == 'todo') del(event);
+        else if(event.target.className=='remove') remov(event);
+    });
+
     //할일 완료
-    function del() {
-        if (this.style.textDecoration != "line-through") this.style.textDecoration = "line-through";
-        else this.style.textDecoration = "none";
+    function del(e) {
+        if (e.target.style.textDecoration != "line-through") e.target.style.textDecoration = "line-through";
+        else e.target.style.textDecoration = "none";
     }
 
     //할일 제거
-    function remov() {
-        this.parentNode.remove();
+    function remov(e) {
+        e.target.parentNode.remove();
     }
 
 </script>
-
 </html>
