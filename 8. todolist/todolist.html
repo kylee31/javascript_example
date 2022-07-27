@@ -66,33 +66,37 @@
     <div class="box">
         <h1>TODO LIST</h1>
         <!--button submit 사용..? submit과 button 차이 확실히 알기-->
-        <div><input id="txt" type="text"><input type="submit" value="+" id="btn"></div>
+        <div><input id="txt" type="text" value=""><input type="submit" value="+" id="btn"></div>
         <ul id="content"></ul>
     </div>
 </body>
 <script>
     //var사용없이 const와 let으로만 선언해보기
     const btn=document.getElementById("btn");
-    const txt=document.getElementById("txt");
-    let content=document.getElementById("content");
-    let todo=document.getElementsByClassName("todo");
-    let remove=document.getElementsByClassName("remove");
-    let out=document.getElementsByClassName("out");
-    
+    let txt=document.getElementById("txt");
+    const content=document.getElementById("content");
+    const todo=document.getElementsByClassName("todo");
+    const remove=document.getElementsByClassName("remove");
+    const out=document.getElementsByClassName("out");
+
 
     //버튼 클릭시 할일 추가
-    btn.addEventListener("click",function(){
-        let v=txt.value;
-        console.log(txt.value);
+    btn.addEventListener("click",todoList);
+
+    //변수 값(let txtValue)으로 txt.value를 담아서 수정했는데 인풋에 작성했던 입력값이 지워지지 않음.. 왜..?
+    //이해완료
+    //변수에 담으면 txt.value 본연의 값이 바뀌는것이 아니니까. 원본을 바꿔줘야지 너무 당연한걸 잊었다
+    //ok
+    function todoList(){
         if(txt.value!=""){
+        console.log(txt.value);
         content.innerHTML+="<li class='out'><span class='todo'>"+txt.value+"</span><span class='remove'>❌</span></li>";
         txt.value="";
-        }
         //클릭시 새로 추가되는 것이므로 배열을 여기서 불러줘야 작동한다..
         Array.from(todo).forEach(event => event.addEventListener("click",del));
         Array.from(remove).forEach(event => event.addEventListener("click",remov));
-
-    });
+        }
+    };
 
     //할일 완료
     function del(){
