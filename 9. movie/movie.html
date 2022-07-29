@@ -13,7 +13,7 @@
         }
 
         body {
-            background: linear-gradient(45deg,#ab6363,#70709f, #966ba5);
+            background: linear-gradient(45deg,#ab6363,#a5a5c4, #966ba5);
         }
 
         .show {
@@ -40,21 +40,20 @@
 <script>
     const info=document.querySelector(".movieInfo");
     const icon = document.querySelector(".movieIcon");
-    //콜백 지옥에 빠질 수 있음..?
+
+    //분명 chrome cors 확장 프로그램으로 실행되었던 코드인데 안된다.. 대체 왜..?
     function callApi() {
         fetch('https://yts.torrentbay.to/api/v2/list_movies.json?sort_by=download_count')
             .then(response => response.json())
             .then(function(json){
-                const title=json.data.movies[2].title;
-                const img=json.data.movies[2].medium_cover_image;
+                const title=json.data.movies[0].title;
+                const img=json.data.movies[0].medium_cover_image;
 
                 info.innerHTML=title;
                 icon.innerHTML="<img src='"+img+"'/>";
             })
             .catch(err => console.log(err))
     }
-
-    //await, async 사용하기?
 
     callApi();
 
