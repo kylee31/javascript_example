@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>img</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        .btn {
+            width: 100px;
+            height: 30px;
+            background-color: rgb(156, 156, 156);
+            color: white;
+            text-align: center;
+            border-radius: 5px;
+            font-size: 1rem;
+            display: inline-block;
+        }
+
+        .inputfile {
+            cursor: pointer;
+        }
+
+        #del {
+            width: 100px;
+            height: 30px;
+            background-color: rgb(156, 156, 156);
+            color: white;
+            text-align: center;
+            border-radius: 5px;
+            border: 0;
+            font-size:1rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="btn">
+        <label class="inputfile" for="inputImage">
+            upload
+            <input type="file" accept="image/*" id="inputImage" style="display:none">
+        </label>
+    </div>
+    <input type="button" id="del" value="delete"><br>
+    <div>
+        <img src="" class="uploadImage">
+    </div>
+    <script>
+        document.querySelector("#inputImage").addEventListener('change', () => {
+            let selectFile = document.querySelector("#inputImage").files[0];
+            //console.log(selectFile);
+            const file = URL.createObjectURL(selectFile);
+            document.querySelector(".uploadImage").src = file;
+            document.querySelector(".uploadImage").style.width="500px";
+        });
+        document.querySelector("#del").addEventListener("click", () => {
+            document.querySelector(".uploadImage").src = "";
+        });
+    </script>
+</body>
+
+</html>
