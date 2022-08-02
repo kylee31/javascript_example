@@ -41,21 +41,22 @@
 
 <body>
     <div class="btn">
-        <label class="inputfile" for="inputImage">
+        <label class="inputfile">
             upload
             <input type="file" accept="image/*" id="inputImage" style="display:none">
         </label>
     </div>
     <input type="button" id="del" value="delete"><br>
     <div>
-        <img src="" class="uploadImage">
+        <img src="" class="uploadImage" alt="">
     </div>
     <script>
         document.querySelector("#inputImage").addEventListener('change', () => {
             let selectFile = document.querySelector("#inputImage").files[0];
             //console.log(selectFile);
             const file = URL.createObjectURL(selectFile);
-            document.querySelector(".uploadImage").src = file;
+            
+            document.querySelector(".uploadImage").src = String(file);
             document.querySelector(".uploadImage").style.width="500px";
         });
         document.querySelector("#del").addEventListener("click", () => {

@@ -125,14 +125,14 @@
         }
     });
 
-    //리스트 생성
+    //할 일(리스트) 생성
     function mylist(cont,num,dec) {
         content.innerHTML += "<li class='to' id=" + num + "><span class='todo' style='text-decoration:"+dec+
             "'>"+ cont + "</span><span class='remove'>❌</span></li>";
         setItems(cont,num,dec);
     };
 
-    //완료, 삭제 이벤트
+    //할 일 추가시 적용되는 완료, 삭제 이벤트
     document.addEventListener("click",function(e){
         if(e.target.className=='todo') clear(e);
         else if(e.target.className=='remove') del(e);
@@ -149,7 +149,7 @@
         localStorage.setItem("items", JSON.stringify(arrTodo));
     }
 
-    //리스트 완료 표시
+    //할 일 완료 표시
     function clear(e) {
         if (e.target.style.textDecoration != "line-through") {
             e.target.style.textDecoration = "line-through";
@@ -170,7 +170,7 @@
         }
     }
 
-    //리스트 제거
+    //할 일 제거
     function del(e) {
         const pNode = e.target.parentNode;
         pNode.remove();
@@ -181,7 +181,7 @@
         localStorage.setItem("items", JSON.stringify(arrTodo));
     }
 
-    //투두리스트 표지
+    //투두 리스트 표지
     loading.onclick=function(){
         loading.style.display='none';
         box.style.display='flex';

@@ -89,9 +89,9 @@
         //윤년 구하기 (2월의 마지막날 28일, 29일)
         //===와 ==의 차이?
         if ((thisYear % 4 == 0 && thisYear % 100 != 0) || thisYear % 400 == 0) {
-            date[1] = 29;
+            //date.splice(1,1,29);
+            date[1]=29;
         }
-
         function cal(monthNum) {
             //이전달 마지막 날의 요일 구하기
             const prev = new Date(thisYear, monthNum);
@@ -101,17 +101,20 @@
             //console.log(prev.getDay()-1);
             //console.log(day[prev.getDay()-1]);
 
+            //요일 생성
             monthBox.innerHTML = month[monthNum];
             for (i = 0; i < 7; i++) {
                 dateBox.innerHTML += "<div class='day'>" + day[i] + "</div>";
             }
             dateBox.innerHTML += "<br>";
+            //첫 요일 생성 전 빈 공간..
             for (i = 0; i < (prev.getDay()); i++) {
                 dateBox.innerHTML += "<div class='day'>&nbsp</div>";
             }
-            for (i = 0; i < date[monthNum]; i++) {
-                const n = i + prev.getDay() + 1;
-                dateBox.innerHTML += "<div class='day'>" + (i + 1) + "</div>";
+            //해당 달 날짜 생성
+            for (i = 1; i <=date[monthNum]; i++) {
+                const n = i + prev.getDay();
+                dateBox.innerHTML += "<div class='day'>" + i + "</div>";
                 if (n != 0 && n % 7 == 0) {
                     dateBox.innerHTML += "<br>";
                 }

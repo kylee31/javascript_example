@@ -26,11 +26,14 @@
         position: fixed;
         background: linear-gradient(45deg, #ffecfb, #d2e7ff);
         z-index: 1;
+        height: 82px;
     }
 
     .header h1 {
         display: inline-block;
         margin: 20px 100px;
+        /*줄바꿈 제거*/
+        white-space: nowrap;
     }
 
     .header>h1:hover {
@@ -65,7 +68,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        color:rgb(91, 91, 91);
+        color: rgb(91, 91, 91);
     }
 
     .content {
@@ -118,11 +121,12 @@
         width: 150px;
         height: 50px;
         text-align: center;
-        font-weight:900;
+        font-weight: 900;
     }
 </style>
 
 <body>
+    <!--shoppingmall header-->
     <header>
         <div class="header">
             <h1 class="logo">Art Studio</h1>
@@ -135,16 +139,22 @@
             <h1 class="shoppingList">☁</h1>
         </div>
     </header>
-    <div class="box">
-        <h1 class="title">Essentials</h1>
-        <div class="content">
-            <div class="item"></div>
+    <!--item list-->
+    <section>
+        <div class="box">
+            <h1 class="title">Essentials</h1>
+            <div class="content">
+                <div class="item"></div>
+            </div>
         </div>
-    </div>
-    <div class="cart">
-        <table class="cartList">
-        </table>
-    </div>
+    </section>
+    <!--cart-->
+    <aside>
+        <div class="cart">
+            <table class="cartList">
+            </table>
+        </div>
+    </aside>
     <script>
         const item = document.querySelector(".item");
         const img = ["src/4.jpg", "src/5.jpg", "src/6.jpg", "src/1.jpg", "src/2.jpg", "src/3.jpg"];
@@ -153,6 +163,8 @@
         let count = [0, 0, 0, 0, 0, 0];
 
         //아이템 생성
+        //data- 사용
+        //createElement 사용하는게 눈에 잘 들어올듯?
         function itemList() {
             for (i = 0; i < img.length; i++) {
                 item.innerHTML += "<div class='itemBox'><img src='" + img[i] + "' style='width:300px;height:400px;' class='myImg'><br>" + "<button type='button' class='minus' data-num='" + i + "'>-</button> "
@@ -185,7 +197,7 @@
         function minusList(e) {
             if (count[e.target.dataset.num] > 0) {
                 count[e.target.dataset.num]--;
-                cartList.innerHTML="";
+                cartList.innerHTML = "";
                 myCart();
             }
         }
@@ -195,7 +207,7 @@
         plusItem.forEach((target) => target.addEventListener("click", plusList));
         function plusList(e) {
             count[e.target.dataset.num]++;
-            cartList.innerHTML="";
+            cartList.innerHTML = "";
             myCart();
         }
 
@@ -203,29 +215,27 @@
         const shoppingList = document.querySelector(".shoppingList");
         const cart = document.querySelector(".cart");
         const box = document.querySelector(".box");
-        cart.style.visibility="hidden";
+        cart.style.visibility = "hidden";
         shoppingList.addEventListener("click", myList);
         function myList() {
-            if (cart.style.visibility == 'hidden') cart.style.visibility = 'visible';
-            else cart.style.visibility = 'hidden';
-            
+            (cart.style.visibility == 'hidden'? cart.style.visibility = 'visible': cart.style.visibility = 'hidden');
         }
 
         //쇼핑리스트 생성하기
         const cartList = document.querySelector(".cartList");
         function myCart() {
-            let sum=0;
-            for(i=0;i<count.length;i++){
-                if(count[i]!=0){
+            let sum = 0;
+            for (i = 0; i < count.length; i++) {
+                if (count[i] != 0) {
                     cartList.innerHTML += "<tr><td>" + name[i] + "</td><td>" + count[i] + "🛒</td></tr>";
-                    sum+=(count[i]*price[i]);
+                    sum += (count[i] * price[i]);
                 }
             }
-            if(sum==0){
-                cartList.innerHTML+="<tr><td colspan='2'>Empty Cart 💬</td></tr>"
+            if (sum == 0) {
+                cartList.innerHTML += "<tr><td colspan='2'>Empty Cart 💬</td></tr>"
             }
-            else{
-                cartList.innerHTML+="<tr><td colspan='2' style='border-top:3px dotted gray'>price : $"+Math.round(sum*100)/100+"</td></tr>";
+            else {
+                cartList.innerHTML += "<tr><td colspan='2' style='border-top:3px dotted gray'>price : $" + Math.round(sum * 100) / 100 + "</td></tr>";
             }
         }
 
