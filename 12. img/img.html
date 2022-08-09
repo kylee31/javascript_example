@@ -11,6 +11,7 @@
             margin: 0;
             padding: 0;
         }
+
         .btn {
             width: 100px;
             height: 30px;
@@ -34,30 +35,35 @@
             text-align: center;
             border-radius: 5px;
             border: 0;
-            font-size:1rem;
+            font-size: 1rem;
+        }
+        .imgbox{
+            margin:20px;
         }
     </style>
 </head>
 
 <body>
-    <div class="btn">
-        <label class="inputfile">
-            upload
-            <input type="file" accept="image/*" id="inputImage" style="display:none">
-        </label>
-    </div>
-    <input type="button" id="del" value="delete"><br>
-    <div>
-        <img src="" class="uploadImage" alt="">
+    <div class="imgbox">
+        <div class="btn">
+            <label class="inputfile">
+                upload
+                <input type="file" accept="image/*" id="inputImage" style="display:none">
+            </label>
+        </div>
+        <input type="button" id="del" value="delete"><br>
+        <div>
+            <img src="" class="uploadImage" alt="">
+        </div>
     </div>
     <script>
         document.querySelector("#inputImage").addEventListener('change', () => {
             let selectFile = document.querySelector("#inputImage").files[0];
             //console.log(selectFile);
             const file = URL.createObjectURL(selectFile);
-            
+
             document.querySelector(".uploadImage").src = String(file);
-            document.querySelector(".uploadImage").style.width="500px";
+            document.querySelector(".uploadImage").style.width = "500px";
         });
         document.querySelector("#del").addEventListener("click", () => {
             document.querySelector(".uploadImage").src = "";
