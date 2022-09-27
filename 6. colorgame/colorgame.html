@@ -46,6 +46,7 @@
 
         ul>li {
             width: 200px;
+            cursor:pointer;
         }
 
         .palette {
@@ -82,18 +83,12 @@
         <div>
             <ul>
                 <li id="colorC" onclick="newC()">NEW COLORS</li>
-                <li id="easy" onclick="mode()">EASY</li>
-                <li id="hard" onclick="mode()">HARD</li>
+                <li id="easy" onclick="mode(3);newC();">EASY</li>
+                <li id="hard" onclick="mode(6);newC();">HARD</li>
             </ul>
         </div>
-        <!--팔레트-->
+        <!--팔레트, 자식 노드에 컬러상자 생성-->
         <div class="palette">
-            <div class="box"></div>
-            <div class="box"></div>
-            <div class="box"></div><br>
-            <div class="box"></div>
-            <div class="box"></div>
-            <div class="box"></div>
         </div>
     </div>
     <script>
@@ -108,8 +103,23 @@
         var num = 0;
         var x;
         //컬러상자 클래스로 가져오기
-        var colorBox = document.getElementsByClassName("box");
         var colorO;
+        
+        //팔레트(부모 노드)
+        var palette=document.querySelector(".palette");
+        var colorBox = document.getElementsByClassName("box");
+
+        //easy모드, hard모드
+        function mode(e){
+            //컬러박스 지우고 다시 설정
+            while(palette.hasChildNodes()){palette.removeChild(palette.firstChild);}
+            //매개변수 e만큼 반복해서 colorbox 생성
+            for(let i=0;i<e;i++){
+                var box=document.createElement("div");
+                box.setAttribute("class","box");
+                palette.appendChild(box);
+            }
+        }
 
         //rgb 랜덤 색상 만들기 (math() 메소드 사용)
         function makeColor() {
@@ -120,7 +130,7 @@
             mycolor = "RGB(" + r + "," + g + "," + b + ")";
             return mycolor;
         }
-
+        
         //newC()
         //새로운 컬러 만들어서 설정하기
         function newC() {
@@ -131,7 +141,7 @@
             }
             var colorGuess = document.getElementById("result");
             //설정된 6개의 색상 중 하나를 랜덤으로 고르는 코드 
-            colorO = String(colorBox[Math.floor(Math.random() * 6)].style.backgroundColor).toUpperCase();
+            colorO = String(colorBox[Math.floor(Math.random() * colorBox.length)].style.backgroundColor).toUpperCase();
             colorGuess.innerHTML = colorO;
         }
         //컬러박스 마우스 클릭 이벤트
@@ -170,6 +180,7 @@
         }
         
         //처음 시작
+        mode(3);
         newC();
 
     </script>
