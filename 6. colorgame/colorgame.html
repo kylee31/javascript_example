@@ -109,6 +109,12 @@
         var palette=document.querySelector(".palette");
         var colorBox = document.getElementsByClassName("box");
 
+        
+        function btnDisabled(e)  {
+            //const target = document.getElementById('easy');
+            (e.target.disabled === true) ? e.target.disabled=false : e.target.disabled=true;
+        }
+
         //easy모드, hard모드
         function mode(e){
             //컬러박스 지우고 다시 설정

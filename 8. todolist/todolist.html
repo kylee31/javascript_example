@@ -102,8 +102,7 @@
             txt.value = "";
             //클릭시 새로 추가되는 것(동적)이므로 배열을 여기서 불러줘야 작동한다..
             //동적 이벤트 할당 코드 리팩토링?
-            //코드 효율성 측면에서 이게 맞는지? 
-            //클릭할때마다 이벤트 리스너로 이벤트가 할당되는것이라 효율성 나빠보이는데 맞는지..
+            //코드 효율성 측면에서 이게 맞는지?
             Array.from(todo).forEach(event => event.addEventListener("click", del));
             Array.from(remove).forEach(event => event.addEventListener("click", remov));
         }
