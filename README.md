@@ -6,6 +6,6 @@ JS 토이 프로젝트 목록을 보고 구현(2022, JS)
 JS 토이 프로젝트 설명 및 UI만 참고하여 기능을 구현하고, 완성된 코드와 기존 코드를 비교하며 JavaScript 학습
 <br><br>
 
-## 참고 강의
+## 참고 사이트
 [24 JavaScript Projects You Can Build to Perfect Your Coding Skills - by Mikke](https://mikkegoes.com/javascript-projects-for-beginners/)
 <br>
