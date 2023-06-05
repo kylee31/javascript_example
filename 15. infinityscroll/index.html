@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InfinityScroll</title>
+    <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+    <div id="info">
+        <list>
+            <ul>
+                <li>1</li>
+            </ul>
+        </list>
+    </div>
+
+    <script src="index.js"></script>
+    <script>
+        //infinity scroll 구현 (intersectionObserver)
+        //비동기 data infinity scroll 구현해보기
+        async function getData(){
+            const data=await fetch(`https://randomuser.me/api/?results=500`)
+                .then((res)=>{
+                    if(res.ok) return res.json()
+                    else console.log("error")
+                });
+            return data
+        }
+
+        //infinity scroll로 li 무한추가
+        (()=>{const ul=document.querySelector('#info list ul');
+        let li=document.querySelector('li:last-child');
+        let count=ul.children.length;
+        //io 생성
+        const io=new IntersectionObserver((entry,observer)=>{
+            //target 지정
+            const ioTarget=entry[0].target;
+            if(entry[0].isIntersecting){
+
+            //target 재지정 (생성된 li로)
+            io.unobserve(li)
+            li=ul.appendChild(document.createElement('li'));
+            li.textContent=++count;
+            io.observe(li);
+            }
+        },{threshold:0.5});
+
+        io.observe(li);
+
+        })();
+
+    </script>
+</body>
+</html>

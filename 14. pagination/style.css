@@ -1,0 +1,21 @@
+body{
+    background-color: aliceblue;
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+table{
+    border:1px solid black;
+    border-collapse:collapse;
+    border-spacing: 0;
+}
+
+th, td{
+    border:1px solid black;
+}
+
+.selected{
+    color:red;
+}
